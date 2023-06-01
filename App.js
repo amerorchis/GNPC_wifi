@@ -71,7 +71,7 @@ app.post("/", (req, res) => {
       .then(response => {
         console.log(res.statusCode); // Log the response to the console
         console.log(req);
-        res.redirect(loginUrl);
+        res.redirect(303, loginUrl);
       })
       .catch(error => {
         console.error(error); // Log the error to the console
