@@ -22,8 +22,9 @@ app.use(express.static("public"))
 
 // GET '/' Endpoint
 app.get(["/", "/apgar", "/depot", "/stmary"], (req, res) => {
+  console.log("This is a console log!");
+  console.log(req.get("referer"));
   res.sendFile(path.join(__dirname, "./public", "index.html"));
-  console.log(req.get("referer"))
 })
 
 // GET error page
