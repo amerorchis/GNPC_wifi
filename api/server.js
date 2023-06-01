@@ -59,7 +59,7 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
       subscribers: [
         {
           email: `${req.body.email}`,
-          tags: ["Test new Gated Login"]
+          tags: ["Gated Login"]
         }
       ]
     }
