@@ -23,7 +23,7 @@ app.use(express.static("public"))
 // GET '/' Endpoint
 app.get(["/", "/apgar", "/depot", "/stmary"], (req, res) => {
   res.sendFile(path.join(__dirname, "./public", "index.html"));
-  console.log(req)
+  console.log(req.get("referer"))
 })
 
 // GET error page
@@ -46,9 +46,8 @@ app.post("/", (req, res) => {
   const node_mac = parsedQuery.node_mac
   const client_ip = parsedQuery.client_ip
   const client_man = parsedQuery.client_mac
-  const test = "test"
 
-  if (!test) {
+  if (!base_grant_url) {
     res.sendFile(path.join(__dirname, "./public", "404.html"))
 } else {
     let loginUrl = base_grant_url
@@ -61,7 +60,7 @@ app.post("/", (req, res) => {
       subscribers: [
         {
           email: `${req.body.email}`,
-          tags: ["Test Gated Login"]
+          tags: ["Test new Gated Login"]
         }
       ]
     }
