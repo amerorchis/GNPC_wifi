@@ -33,7 +33,7 @@ app.get("*", (req, res) => {
 })
 
 // POST '// Endpoint
-app.post("/", (req, res) => {
+app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
   const getHost = url => {
     return url.replace(/^((\w+:)?\/\/[^\/]+\/?).*$/, "$1")
   }
