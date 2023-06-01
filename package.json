@@ -1,0 +1,17 @@
+{
+  "name": "splash-page",
+  "version": "1.0.0",
+  "description": "Splash Page",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Lucas Otero",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "drip-nodejs": "^2.1.1",
+    "express": "^4.15.3",
+    "query-string": "^6.2.0"
+  }
+}
