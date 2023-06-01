@@ -24,12 +24,12 @@ app.use(express.static("public"))
 app.get(["/", "/apgar", "/depot", "/stmary"], (req, res) => {
   console.log("This is a console log!");
   console.log(req.get("referer"));
-  res.sendFile(path.join(__dirname, "./public", "index.html"));
+  res.sendFile(path.join(__dirname, "../public", "index.html"));
 })
 
 // GET error page
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./public", "404.html"))
+  res.sendFile(path.join(__dirname, "../public", "404.html"))
 })
 
 // POST '// Endpoint
@@ -49,7 +49,7 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
   const client_man = parsedQuery.client_mac
 
   if (!base_grant_url) {
-    res.sendFile(path.join(__dirname, "./public", "404.html"))
+    res.sendFile(path.join(__dirname, "../public", "404.html"))
 } else {
     let loginUrl = base_grant_url
     if (user_continue_url) {
@@ -76,7 +76,7 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
       })
       .catch(error => {
         console.error(error); // Log the error to the console
-        res.sendFile(path.join(__dirname, "./public", "404.html"));
+        res.sendFile(path.join(__dirname, "../public", "404.html"));
       });
   }
 })
