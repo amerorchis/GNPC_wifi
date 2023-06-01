@@ -22,7 +22,8 @@ app.use(express.static("public"))
 
 // GET '/' Endpoint
 app.get(["/", "/apgar", "/depot", "/stmary"], (req, res) => {
-  res.sendFile(path.join(__dirname, "./public", "index.html"))
+  res.sendFile(path.join(__dirname, "./public", "index.html"));
+  console.log(req)
 })
 
 // GET error page
@@ -52,7 +53,7 @@ app.post("/", (req, res) => {
 } else {
     let loginUrl = base_grant_url
     if (user_continue_url) {
-      loginUrl += "?continue_url=" + user_continue_url
+      loginUrl += "?continue_url=" + user_continue_url + "&duration=1800"
     }
 
     // Get Drip Payload
