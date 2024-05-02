@@ -5,13 +5,16 @@
   "main": "api/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node api/server.js"
+    "start": "node api/server.js",
+    "lint": "eslint --fix"
   },
   "author": "Lucas Otero",
   "dependencies": {
+    "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
     "body-parser": "^1.17.2",
     "drip-nodejs": "^2.1.1",
+    "eslint": "^9.1.1",
     "express": "^4.15.3",
     "query-string": "^6.2.0"
   }
