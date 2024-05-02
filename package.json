@@ -9,6 +9,7 @@
   },
   "author": "Lucas Otero",
   "dependencies": {
+    "@vercel/speed-insights": "^1.0.10",
     "body-parser": "^1.17.2",
     "drip-nodejs": "^2.1.1",
     "express": "^4.15.3",

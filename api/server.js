@@ -4,6 +4,8 @@ const app = express()
 const bodyParser = require("body-parser")
 const queryString = require("query-string")
 const path = require("path")
+import { injectSpeedInsights } from '@vercel/speed-insights';
+injectSpeedInsights();
 
 const port = process.env.PORT || 3000
 
