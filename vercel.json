@@ -1,16 +1,6 @@
 {
     "version": 2,
     "name": "splash-page",
-    "builds": [
-      {
-          "src": "server.js",
-          "use": "@vercel/node"
-      },
-      {
-          "src": "public/**",
-          "use": "@vercel/static"
-      }
-  ],
     "routes": [
       { "src": "/(.*)", "dest": "api/server.js" }
     ]
