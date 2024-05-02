@@ -1,10 +1,10 @@
 @font-face{	
 	font-family:EvelethRegular-Bold;
-	src:url(../fonts/30DD2B_9_0.eot);
-	src:url(../fonts/30DD2B_9_0.eot?#iefix) format('embedded-opentype'),url(../fonts/30DD2B_9_0.woff2) format('woff2'),url(../fonts/30DD2B_9_0.woff) format('woff'),url(../fonts/30DD2B_9_0.ttf) format('truetype');
+	src:url(/fonts/30DD2B_9_0.eot);
+	src:url(/fonts/30DD2B_9_0.eot?#iefix) format('embedded-opentype'),url(/fonts/30DD2B_9_0.woff2) format('woff2'),url(/fonts/30DD2B_9_0.woff) format('woff'),url(/fonts/30DD2B_9_0.ttf) format('truetype');
 }
 
-@font-face{font-family:'Gentium Book Basic';font-style:italic;font-weight:700;src:local('Gentium Book Basic Bold Italic'),local('GentiumBookBasic-BoldItalic'),url(https://fonts.gstatic.com/s/gentiumbookbasic/v9/pe0-MJCbPYBVokB1LHA9bbyaQb8ZGjc4VYnDzrfb-V8.ttf) format('truetype')}@font-face{font-family:'Gentium Book Basic';font-style:normal;font-weight:400;src:local('Gentium Book Basic'),local('GentiumBookBasic'),url(https://fonts.gstatic.com/s/gentiumbookbasic/v9/pe0zMJCbPYBVokB1LHA9bbyaQb8ZGjc4ULF_.ttf) format('truetype')}@font-face{font-family:'Open Sans';font-style:normal;font-weight:400;src:local('Open Sans Regular'),local('OpenSans-Regular'),url(https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0e.ttf) format('truetype')}@font-face{font-family:'Open Sans';font-style:normal;font-weight:800;src:local('Open Sans ExtraBold'),local('OpenSans-ExtraBold'),url(https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UN8rsOUuhs.ttf) format('truetype')}@font-face{font-family:EvelethRegular-Bold;src:url(../fonts/30DD2B_9_0.eot);src:url(../fonts/30DD2B_9_0.eot?#iefix) format('embedded-opentype'),url(../fonts/30DD2B_9_0.woff2) format('woff2'),url(../fonts/30DD2B_9_0.woff) format('woff'),url(../fonts/30DD2B_9_0.ttf) format('truetype')}@font-face{font-family:EvelethThin;src:url(../fonts/30DD2B_2_0.eot);src:url(../fonts/30DD2B_2_0.eot?#iefix) format('embedded-opentype'),url(../fonts/30DD2B_2_0.woff2) format('woff2'),url(../fonts/30DD2B_2_0.woff) format('woff'),url(../fonts/30DD2B_2_0.ttf) format('truetype')}@font-face{font-family:EvelethSlantRegular-Bold;src:url(../fonts/eveleth-slant-bold.eot);src:url(../fonts/eveleth-slant-bold.eot?#iefix) format('embedded-opentype'),url(../fonts/eveleth-slant-bold.woff2) format('woff2'),url(../fonts/eveleth-slant-bold.woff) format('woff'),url(../fonts/eveleth-slant-bold.ttf) format('truetype')}
+@font-face{font-family:'Gentium Book Basic';font-style:italic;font-weight:700;src:local('Gentium Book Basic Bold Italic'),local('GentiumBookBasic-BoldItalic'),url(https://fonts.gstatic.com/s/gentiumbookbasic/v9/pe0-MJCbPYBVokB1LHA9bbyaQb8ZGjc4VYnDzrfb-V8.ttf) format('truetype')}@font-face{font-family:'Gentium Book Basic';font-style:normal;font-weight:400;src:local('Gentium Book Basic'),local('GentiumBookBasic'),url(https://fonts.gstatic.com/s/gentiumbookbasic/v9/pe0zMJCbPYBVokB1LHA9bbyaQb8ZGjc4ULF_.ttf) format('truetype')}@font-face{font-family:'Open Sans';font-style:normal;font-weight:400;src:local('Open Sans Regular'),local('OpenSans-Regular'),url(https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0e.ttf) format('truetype')}@font-face{font-family:'Open Sans';font-style:normal;font-weight:800;src:local('Open Sans ExtraBold'),local('OpenSans-ExtraBold'),url(https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UN8rsOUuhs.ttf) format('truetype')}@font-face{font-family:EvelethRegular-Bold;src:url(/fonts/30DD2B_9_0.eot);src:url(/fonts/30DD2B_9_0.eot?#iefix) format('embedded-opentype'),url(/fonts/30DD2B_9_0.woff2) format('woff2'),url(/fonts/30DD2B_9_0.woff) format('woff'),url(/fonts/30DD2B_9_0.ttf) format('truetype')}@font-face{font-family:EvelethThin;src:url(/fonts/30DD2B_2_0.eot);src:url(/fonts/30DD2B_2_0.eot?#iefix) format('embedded-opentype'),url(/fonts/30DD2B_2_0.woff2) format('woff2'),url(/fonts/30DD2B_2_0.woff) format('woff'),url(/fonts/30DD2B_2_0.ttf) format('truetype')}@font-face{font-family:EvelethSlantRegular-Bold;src:url(/fonts/eveleth-slant-bold.eot);src:url(/fonts/eveleth-slant-bold.eot?#iefix) format('embedded-opentype'),url(/fonts/eveleth-slant-bold.woff2) format('woff2'),url(/fonts/eveleth-slant-bold.woff) format('woff'),url(/fonts/eveleth-slant-bold.ttf) format('truetype')}
 
 
 * {
@@ -19,11 +19,11 @@ body {
   height: 100%;
   font-family: 'Gentium Book Basic',Georgia,"Times New Roman",Times,serif;
   font-size: 16px;
-  background-image: url('../img/subtle_grunge.jpg');
+  background-image: url('/img/subtle_grunge.jpg');
 }
 
 .top {
-	background-image: url(../img/glacier-background.png);
+	background-image: url(/img/glacier-background.png);
     background-repeat: no-repeat;
     background-size: cover;
 	background-position: top;
