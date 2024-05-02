@@ -8,6 +8,7 @@ import { injectSpeedInsights } from '@vercel/speed-insights';
 injectSpeedInsights();
 
 const port = process.env.PORT || 3000
+app.use(express.static('public'))
 
 // Drip Client
 const client = require("drip-nodejs")({
