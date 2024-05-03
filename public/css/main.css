@@ -1,33 +1,50 @@
-@font-face{	
-	font-family:EvelethRegular-Bold;
-	src:url(/fonts/30DD2B_9_0.eot);
-	src:url(/fonts/30DD2B_9_0.eot?#iefix) format('embedded-opentype'),url(/fonts/30DD2B_9_0.woff2) format('woff2'),url(/fonts/30DD2B_9_0.woff) format('woff'),url(/fonts/30DD2B_9_0.ttf) format('truetype');
+@font-face {
+	font-family: 'Gentium Book Basic';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Gentium Book Basic'), local('GentiumBookBasic'), url(https://fonts.gstatic.com/s/gentiumbookbasic/v9/pe0zMJCbPYBVokB1LHA9bbyaQb8ZGjc4ULF_.ttf) format('truetype')
 }
 
-@font-face{font-family:'Gentium Book Basic';font-style:italic;font-weight:700;src:local('Gentium Book Basic Bold Italic'),local('GentiumBookBasic-BoldItalic'),url(https://fonts.gstatic.com/s/gentiumbookbasic/v9/pe0-MJCbPYBVokB1LHA9bbyaQb8ZGjc4VYnDzrfb-V8.ttf) format('truetype')}@font-face{font-family:'Gentium Book Basic';font-style:normal;font-weight:400;src:local('Gentium Book Basic'),local('GentiumBookBasic'),url(https://fonts.gstatic.com/s/gentiumbookbasic/v9/pe0zMJCbPYBVokB1LHA9bbyaQb8ZGjc4ULF_.ttf) format('truetype')}@font-face{font-family:'Open Sans';font-style:normal;font-weight:400;src:local('Open Sans Regular'),local('OpenSans-Regular'),url(https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0e.ttf) format('truetype')}@font-face{font-family:'Open Sans';font-style:normal;font-weight:800;src:local('Open Sans ExtraBold'),local('OpenSans-ExtraBold'),url(https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UN8rsOUuhs.ttf) format('truetype')}@font-face{font-family:EvelethRegular-Bold;src:url(/fonts/30DD2B_9_0.eot);src:url(/fonts/30DD2B_9_0.eot?#iefix) format('embedded-opentype'),url(/fonts/30DD2B_9_0.woff2) format('woff2'),url(/fonts/30DD2B_9_0.woff) format('woff'),url(/fonts/30DD2B_9_0.ttf) format('truetype')}@font-face{font-family:EvelethThin;src:url(/fonts/30DD2B_2_0.eot);src:url(/fonts/30DD2B_2_0.eot?#iefix) format('embedded-opentype'),url(/fonts/30DD2B_2_0.woff2) format('woff2'),url(/fonts/30DD2B_2_0.woff) format('woff'),url(/fonts/30DD2B_2_0.ttf) format('truetype')}@font-face{font-family:EvelethSlantRegular-Bold;src:url(/fonts/eveleth-slant-bold.eot);src:url(/fonts/eveleth-slant-bold.eot?#iefix) format('embedded-opentype'),url(/fonts/eveleth-slant-bold.woff2) format('woff2'),url(/fonts/eveleth-slant-bold.woff) format('woff'),url(/fonts/eveleth-slant-bold.ttf) format('truetype')}
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Open Sans Regular'), local('OpenSans-Regular'), url(https://fonts.gstatic.com/s/opensans/v16/mem8YaGs126MiZpBA-UFVZ0e.ttf) format('truetype')
+}
 
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 800;
+	src: local('Open Sans ExtraBold'), local('OpenSans-ExtraBold'), url(https://fonts.gstatic.com/s/opensans/v16/mem5YaGs126MiZpBA-UN8rsOUuhs.ttf) format('truetype')
+}
+
+@font-face {
+	font-family: 'EvelethSlantRegular-Bold';
+	src: url(/fonts/eveleth-slant-bold.woff2) format('woff2')
+}
 
 * {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 html,
 body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Gentium Book Basic',Georgia,"Times New Roman",Times,serif;
-  font-size: 16px;
-  background-image: url('/img/subtle_grunge.jpg');
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	font-family: 'Gentium Book Basic', Georgia, "Times New Roman", Times, serif;
+	font-size: 16px;
+	background-image: url('/img/subtle_grunge.jpg');
 }
 
 .top {
 	background-image: url(/img/glacier-background.png);
-    background-repeat: no-repeat;
-    background-size: cover;
+	background-repeat: no-repeat;
+	background-size: cover;
 	background-position: top;
-    text-align: center;
+	text-align: center;
 }
 
 .logo {
@@ -40,25 +57,25 @@ body {
 
 .wifi-logo {
 	position: absolute;
-    top: -128px;
-    background-color: #f8f8f6;
-    border: 10px solid #f8f8f6;
-    border-radius: 999px;
-    padding: 4px 1px;
-    left: 50%;
-    transform: translateX(-50%);
+	top: -128px;
+	background-color: #f8f8f6;
+	border: 10px solid #f8f8f6;
+	border-radius: 999px;
+	padding: 4px 1px;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 .mc {
-    background: #f8f8f6;
-    width: 95%;
-    margin: 0 auto;
-    text-align: center;
-    padding: 100px 50px;
-    position: absolute;
+	background: #f8f8f6;
+	width: 95%;
+	margin: 0 auto;
+	text-align: center;
+	padding: 100px 50px;
+	position: absolute;
 	top: -60px;
-    left: 50%;
-    transform: translateX(-50%);
+	left: 50%;
+	transform: translateX(-50%);
 	max-width: 1350px;
 	min-height: 750px;
 }
@@ -67,9 +84,9 @@ p {
 	margin: 15px 0;
 }
 
-p.small  {
+p.small {
 	font-size: 11px;
-	font-family: 'Open Sans',"Helvetica Neue", "Helvetica","Arial",sans-serif;
+	font-family: 'Open Sans', "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 }
 
 p.mbot {
@@ -77,16 +94,16 @@ p.mbot {
 }
 
 h1 {
-	font-family: EvelethSlantRegular-Bold,"Arial Black","Arial Bold",Gadget,sans-serif;
-    font-weight: 400;
-    line-height: 1.1;
-    color: #402e00;
+	font-family: 'EvelethSlantRegular-Bold', "Arial Black", "Arial Bold", Gadget, sans-serif;
+	font-weight: 400;
+	line-height: 1.1;
+	color: #402e00;
 	font-size: 44px;
-	margin-bottom: 30px;	
+	margin-bottom: 30px;
 }
 
 h3 {
-	font-family: 'Open Sans',"Helvetica Neue", "Helvetica","Arial",sans-serif;
+	font-family: 'Open Sans', "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 	font-size: 12px;
 	font-weight: 700;
 }
@@ -110,7 +127,7 @@ input[type=email] {
 .btn-orange {
 	background-color: #f15c22;
 	color: white;
-	font-family: 'Open Sans',"Helvetica Neue", "Helvetica","Arial",sans-serif;
+	font-family: 'Open Sans', "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 	font-weight: 700;
 	font-size: 14px;
 	line-height: 14px;
@@ -131,16 +148,17 @@ input[type=email] {
 
 
 #footer {
-  position: relative;
-  width: 100%;
-  height: 25px; /* Height of the footer */
-  clear: both;
-  background-color: #eeeeee;
-  /*background-image: url("Images/gnpc-footer-bg-1920.jpg");*/
-  border-top: 1px solid #dddddd;
-  padding-top: 33px;
-  position: absolute;
-  top: 1020px;
+	position: relative;
+	width: 100%;
+	height: 25px;
+	/* Height of the footer */
+	clear: both;
+	background-color: #eeeeee;
+	/*background-image: url("Images/gnpc-footer-bg-1920.jpg");*/
+	border-top: 1px solid #dddddd;
+	padding-top: 33px;
+	position: absolute;
+	top: 1020px;
 }
 
 @media screen and (max-width: 679px) {
@@ -150,48 +168,48 @@ input[type=email] {
 		left: 0;
 		transform: none;
 		width: 100%;
-		padding: 50px 25px; 
+		padding: 50px 25px;
 		margin-top: -50px;
 		min-height: 500px;
 	}
-	
+
 	.wifi-logo {
 		top: -78px;
 	}
-	
+
 	h1 {
 		font-size: 30px;
 	}
-	
+
 	#footer {
 		position: static;
 	}
-	
+
 	.container {
 		padding: 0;
 	}
 }
 
 
-@media screen and (max-width: 375px ) {
+@media screen and (max-width: 375px) {
 	.mc {
 		padding: 40px 20px;
 	}
-	
+
 	h1 {
 		font-size: 28px;
 	}
-	
+
 }
 
-@media screen and (max-width: 320px ) {
-	
-	.mc  {
-		padding: 35px 15px;	
+@media screen and (max-width: 320px) {
+
+	.mc {
+		padding: 35px 15px;
 	}
-	
+
 	h1 {
 		font-size: 25px;
 	}
-	
+
 }
