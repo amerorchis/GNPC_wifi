@@ -62,34 +62,40 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
         {
           email: `${req.body.email}`,
           tags: ["Gated Login"],
+          action: 'Wifi Login'
+        }
+      ]
+    };
+
+    const eventPayload = {
+      subscribers: [
+        {
+          email: `${req.body.email}`,
+          action: 'Wifi Login'
         }
       ]
     }
-
+  
     // Send Drip Info and Redirect
     client
-      .createUpdateSubscriber(payload)
-      .then(response => {
-        console.log("Drip response code: ", res.statusCode); // Log the response to the console
+    .createUpdateSubscriber(subscriberPayload)
+    .then(response => {
+      console.log("Drip createUpdateSubscriber response code:", response.statusCode);
+      return client.recordEvents(eventPayload);
+    })
+    .then(eventResponse => {
+      console.log("Drip recordEvents response code:", eventResponse.statusCode);
+      res.redirect(303, loginUrl);
+    })
+    .catch(error => {
+      console.error("Error in Drip operations:", error.message);
+      if (error.response) {
+        console.error("Error details:", error.response.body);
+      }
+      res.status(500).send("An error occurred while processing your request.");
+    });
+});
 
-        // Record the custom event
-        return client.recordEvent({
-          email: req.body.email,
-          action: "Wifi Login",
-          properties: {
-            AP_mac: node_mac
-          }
-        });
-      })
-      .then(() => {
-        res.redirect(303, loginUrl);
-      })
-      .catch(error => {
-        console.error(error); // Log the error to the console
-        res.sendFile(path.join(__dirname, "../public", "404.html"));
-      });
-  }
-})
 
 // Start Server
 app.listen(port, () => {
