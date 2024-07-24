@@ -46,6 +46,7 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
   const client_ip = parsedQuery.client_ip
   const client_man = parsedQuery.client_mac
   console.log(req.body.email)
+  console.log('Node Mac:', node_mac)
 
   if (!base_grant_url) {
     res.sendFile(path.join(__dirname, "../public", "404.html"))
