@@ -62,7 +62,6 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
         {
           email: `${req.body.email}`,
           tags: ["Gated Login"],
-          action: 'Wifi Login'
         }
       ]
     }
@@ -72,6 +71,17 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
       .createUpdateSubscriber(payload)
       .then(response => {
         console.log("Drip response code: ", res.statusCode); // Log the response to the console
+
+        // Record the custom event
+        return client.recordEvent({
+          email: req.body.email,
+          action: "Wifi Login",
+          properties: {
+            AP_mac: node_mac
+          }
+        });
+      })
+      .then(() => {
         res.redirect(303, loginUrl);
       })
       .catch(error => {
