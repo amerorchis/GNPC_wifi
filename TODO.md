@@ -1,8 +1,14 @@
 # TODO
 
-## WiFi session cooldown (per client MAC)
+(nothing pending)
 
-Prevent guests from immediately rejoining after using their 30-minute session.
+# Done
+
+## WiFi session cooldown (per client MAC) — DONE 2026-08-18
+
+Implemented in api/server.js using the upstash-kv-coffee-jacket store.
+Cooldown defaults to 30 minutes; override with the WIFI_COOLDOWN_SECONDS env
+var (no redeploy needed beyond the env change). Cooldown page: api/cooldown.html.
 
 **Design (agreed 2026-08-18):**
 - Store `grant:<client_mac> = grant timestamp` in Upstash Redis (Vercel
@@ -15,12 +21,6 @@ Prevent guests from immediately rejoining after using their 30-minute session.
 - Fail open: if Redis is unreachable or rate-limited, grant anyway (matches
   the Drip fail-open behavior — storage problems must not block park WiFi).
 - Use the Upstash REST API via fetch; no new npm dependency.
-
-**Blocked on:**
-1. Provision Upstash Redis: Vercel project → Storage tab → Create Database →
-   Upstash for Redis (free plan). Injects REST URL/token env vars.
-2. Decide cooldown length (30 min? 1 hour?).
-3. Copy for the cooldown page.
 
 **Known limitations (accepted):** iOS/Android private Wi-Fi addresses can
 rotate the MAC (forget/rejoin network resets the cooldown); client_mac comes
