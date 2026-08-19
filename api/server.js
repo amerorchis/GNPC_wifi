@@ -56,7 +56,6 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
   const query = referer.replace(getHost(referer), "");
   const parsedQuery = queryString.parse(query);
   const base_grant_url = parsedQuery.base_grant_url;
-  const user_continue_url = parsedQuery.user_continue_url;
   const node_mac = parsedQuery.node_mac;
   const client_ip = parsedQuery.client_ip;
   const client_mac = parsedQuery.client_mac;
@@ -68,18 +67,21 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
     return res.status(404).sendFile(path.join(__dirname, "../public", "404.html"));
   }
 
-  let loginUrl = base_grant_url;
-  if (user_continue_url) {
-    loginUrl += "?continue_url=" + encodeURIComponent(user_continue_url) + "&duration=1800";
-  }
+  // After Meraki grants access, send the guest to the Conservancy's connected page
+  const loginUrl = base_grant_url
+    + "?continue_url=" + encodeURIComponent("https://glacier.org/connected/")
+    + "&duration=1800";
 
   // Get Drip Payload
   // drip-nodejs v3 wraps these into {subscribers: [...]} / {events: [...]} itself,
   // so pass the bare subscriber/event objects (v2 required pre-wrapped payloads)
   const subscriberPayload = {
     email: req.body.email,
-    tags: location ? ["Gated Login", "Wifi - " + location] : ["Gated Login"],
+    tags: ["Gated Login"],
   };
+  if (location) {
+    subscriberPayload.custom_fields = { wifi_location: location };
+  }
 
   const eventPayload = {
     email: req.body.email,
