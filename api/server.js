@@ -20,6 +20,14 @@ const client = require("drip-nodejs")({
   accountId: process.env.DRIPACCOUNT
 });
 
+// Meraki AP MAC address -> park location (list provided by IT, 2026-08-18)
+const AP_LOCATIONS = {
+  "e0:cb:bc:4a:fb:68": "Apgar",
+  "ac:17:c8:10:ee:c3": "Many Glacier",
+  "ac:17:c8:10:ef:0b": "Belton / Depot",
+  "ac:17:c8:10:ef:0c": "St Mary"
+};
+
 // Express Middleware  - BodyParser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -52,8 +60,9 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
   const node_mac = parsedQuery.node_mac;
   const client_ip = parsedQuery.client_ip;
   const client_mac = parsedQuery.client_mac;
+  const location = AP_LOCATIONS[(node_mac || "").toLowerCase()];
   console.log('Email:', req.body.email);
-  console.log('Node Mac:', node_mac);
+  console.log('Node Mac:', node_mac, '->', location || 'Unknown');
 
   if (!base_grant_url) {
     return res.status(404).sendFile(path.join(__dirname, "../public", "404.html"));
@@ -69,12 +78,16 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
   // so pass the bare subscriber/event objects (v2 required pre-wrapped payloads)
   const subscriberPayload = {
     email: req.body.email,
-    tags: ["Gated Login"],
+    tags: location ? ["Gated Login", "Wifi - " + location] : ["Gated Login"],
   };
 
   const eventPayload = {
     email: req.body.email,
     action: 'Wifi Login',
+    properties: {
+      location: location || "Unknown",
+      node_mac: node_mac || "unknown",
+    },
   };
 
   // Send Drip Info and Redirect. The two Drip calls run in parallel, and a
