@@ -5,6 +5,7 @@
       { "src": "/css/(.*)", "headers": { "cache-control": "public, max-age=86400" }, "continue": true },
       { "src": "/(img|fonts)/(.*)", "headers": { "cache-control": "public, max-age=2592000" }, "continue": true },
       { "src": "/favicon.ico", "headers": { "cache-control": "public, max-age=86400" }, "continue": true },
+      { "src": "/(.*)", "methods": ["POST"], "dest": "api/server.js" },
       { "handle": "filesystem" },
       { "src": "/(.*)", "dest": "api/server.js" }
     ]
