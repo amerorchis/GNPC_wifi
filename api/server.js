@@ -5,7 +5,14 @@ const bodyParser = require("body-parser");
 const queryString = require("query-string");
 const path = require("path");
 const port = process.env.PORT || 3000;
-app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, "../public"), {
+  setHeaders(res, filePath) {
+    // Long-cache assets, but never the HTML pages themselves
+    if (!filePath.endsWith(".html")) {
+      res.setHeader("Cache-Control", "public, max-age=86400");
+    }
+  }
+}));
 
 // Drip Client
 const client = require("drip-nodejs")({
@@ -17,9 +24,6 @@ const client = require("drip-nodejs")({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve Static Files
-app.use(express.static("public"));
-
 // GET '/' Endpoint
 app.get(["/", "/apgar", "/depot", "/stmary"], (req, res) => {
   res.sendFile(path.join(__dirname, "../public", "index.html"));
@@ -27,7 +31,7 @@ app.get(["/", "/apgar", "/depot", "/stmary"], (req, res) => {
 
 // GET error page
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public", "404.html"));
+  res.status(404).sendFile(path.join(__dirname, "../public", "404.html"));
 });
 
 // POST Endpoint
@@ -38,6 +42,9 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
 
   // Parse URL to Get Queries
   const referer = req.get("referer");
+  if (!referer) {
+    return res.status(404).sendFile(path.join(__dirname, "../public", "404.html"));
+  }
   const query = referer.replace(getHost(referer), "");
   const parsedQuery = queryString.parse(query);
   const base_grant_url = parsedQuery.base_grant_url;
@@ -49,12 +56,12 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
   console.log('Node Mac:', node_mac);
 
   if (!base_grant_url) {
-    return res.sendFile(path.join(__dirname, "../public", "404.html"));
+    return res.status(404).sendFile(path.join(__dirname, "../public", "404.html"));
   }
 
   let loginUrl = base_grant_url;
   if (user_continue_url) {
-    loginUrl += "?continue_url=" + user_continue_url + "&duration=1800";
+    loginUrl += "?continue_url=" + encodeURIComponent(user_continue_url) + "&duration=1800";
   }
 
   // Get Drip Payload
@@ -70,23 +77,24 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
     action: 'Wifi Login',
   };
 
-  // Send Drip Info and Redirect
-  client
-    .createUpdateSubscriber(subscriberPayload)
-    .then(response => {
-      console.log("Drip createUpdateSubscriber response code:", response.status);
-      return client.recordEvent(eventPayload);
-    })
-    .then(eventResponse => {
+  // Send Drip Info and Redirect. The two Drip calls run in parallel, and a
+  // Drip failure must not block the guest's WiFi access - always redirect.
+  Promise.all([
+    client.createUpdateSubscriber(subscriberPayload),
+    client.recordEvent(eventPayload)
+  ])
+    .then(([subscriberResponse, eventResponse]) => {
+      console.log("Drip createUpdateSubscriber response code:", subscriberResponse.status);
       console.log("Drip recordEvents response code:", eventResponse.status);
-      res.redirect(303, loginUrl);
     })
     .catch(error => {
       console.error("Error in Drip operations:", error.message);
       if (error.response) {
         console.error("Error details:", error.response.data);
       }
-      res.status(500).send("An error occurred while processing your request.");
+    })
+    .then(() => {
+      res.redirect(303, loginUrl);
     });
 });
 
