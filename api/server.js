@@ -58,39 +58,33 @@ app.post(["/", "/submit", "/depot", "/stmary"], (req, res) => {
   }
 
   // Get Drip Payload
+  // drip-nodejs v3 wraps these into {subscribers: [...]} / {events: [...]} itself,
+  // so pass the bare subscriber/event objects (v2 required pre-wrapped payloads)
   const subscriberPayload = {
-    subscribers: [
-      {
-        email: req.body.email,
-        tags: ["Gated Login"],
-      }
-    ]
+    email: req.body.email,
+    tags: ["Gated Login"],
   };
 
   const eventPayload = {
-    events: [
-      {
-        email: req.body.email,
-        action: 'Wifi Login',
-      }
-    ]
+    email: req.body.email,
+    action: 'Wifi Login',
   };
 
   // Send Drip Info and Redirect
   client
     .createUpdateSubscriber(subscriberPayload)
     .then(response => {
-      console.log("Drip createUpdateSubscriber response code:", response.statusCode);
+      console.log("Drip createUpdateSubscriber response code:", response.status);
       return client.recordEvent(eventPayload);
     })
     .then(eventResponse => {
-      console.log("Drip recordEvents response code:", eventResponse.statusCode);
+      console.log("Drip recordEvents response code:", eventResponse.status);
       res.redirect(303, loginUrl);
     })
     .catch(error => {
       console.error("Error in Drip operations:", error.message);
       if (error.response) {
-        console.error("Error details:", error.response.body);
+        console.error("Error details:", error.response.data);
       }
       res.status(500).send("An error occurred while processing your request.");
     });
