@@ -2,7 +2,6 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const queryString = require("query-string");
 const path = require("path");
 const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, "../public"), {
@@ -101,7 +100,7 @@ app.post(["/", "/submit", "/depot", "/stmary"], async (req, res) => {
     return res.status(404).sendFile(path.join(__dirname, "../public", "404.html"));
   }
   const query = referer.replace(getHost(referer), "");
-  const parsedQuery = queryString.parse(query);
+  const parsedQuery = Object.fromEntries(new URLSearchParams(query));
   const base_grant_url = parsedQuery.base_grant_url;
   const node_mac = parsedQuery.node_mac;
   const client_ip = parsedQuery.client_ip;
