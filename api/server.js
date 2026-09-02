@@ -147,10 +147,15 @@ app.post(["/", "/submit", "/depot", "/stmary"], async (req, res) => {
 
   // Send Drip Info and Redirect. The two Drip calls run in parallel, and a
   // Drip failure must not block the guest's WiFi access - always redirect.
-  Promise.all([
+  const recordTasks = [
     client.createUpdateSubscriber(subscriberPayload),
     client.recordEvent(eventPayload)
-  ])
+  ];
+  if (!location && node_mac) {
+    // Unmapped AP: remember its MAC so it can be identified and added to AP_LOCATIONS
+    recordTasks.push(kv(["SADD", "wifi:unknown_macs", node_mac.toLowerCase()]));
+  }
+  Promise.all(recordTasks)
     .then(([subscriberResponse, eventResponse]) => {
       console.log("Drip createUpdateSubscriber response code:", subscriberResponse.status);
       console.log("Drip recordEvents response code:", eventResponse.status);
