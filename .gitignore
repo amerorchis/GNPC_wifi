@@ -4,3 +4,5 @@ node_modules
 CLAUDE.md
 app.py
 .vercel
+.env
+.env.*
