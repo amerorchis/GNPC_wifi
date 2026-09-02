@@ -25,7 +25,8 @@ const AP_LOCATIONS = {
   "e0:cb:bc:4a:fb:68": "Apgar",
   "ac:17:c8:10:ee:c3": "Many Glacier",
   "ac:17:c8:10:ef:0b": "Belton / Depot",
-  "ac:17:c8:10:ef:0c": "St Mary"
+  "ac:17:c8:10:ef:0c": "St Mary",
+  "e4:55:a8:e6:63:90": "Two Medicine"
 };
 
 // Session cooldown: after a guest's 30-minute session ends, their device
