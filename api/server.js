@@ -19,13 +19,15 @@ const client = require("drip-nodejs")({
   accountId: process.env.DRIPACCOUNT
 });
 
-// Meraki AP MAC address -> park location (list provided by IT, 2026-08-18)
+// Meraki AP MAC address -> park location (verified against the Meraki
+// dashboard AP list, 2026-09-08)
 const AP_LOCATIONS = {
   "e0:cb:bc:4a:fb:68": "Apgar",
   "ac:17:c8:10:ee:c3": "Many Glacier",
   "ac:17:c8:10:ef:0b": "Belton / Depot",
   "ac:17:c8:10:ef:0c": "St Mary",
-  "e4:55:a8:e6:63:90": "Two Medicine"
+  "e4:55:a8:e6:63:90": "Two Medicine",
+  "e0:cb:bc:bf:bd:a9": "Test AP"
 };
 
 // Session cooldown: after a guest's 30-minute session ends, their device
