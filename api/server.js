@@ -93,7 +93,7 @@ app.get("*", (req, res) => {
 // POST Endpoint
 app.post(["/", "/submit", "/depot", "/stmary"], async (req, res) => {
   const getHost = url => {
-    return url.replace(/^((\w+:)?\/\/[^\/]+\/?).*$/, "$1");
+    return url.replace(/^((\w+:)?\/\/[^/]+\/?).*$/, "$1");
   };
 
   // Parse URL to Get Queries
@@ -105,7 +105,6 @@ app.post(["/", "/submit", "/depot", "/stmary"], async (req, res) => {
   const parsedQuery = Object.fromEntries(new URLSearchParams(query));
   const base_grant_url = parsedQuery.base_grant_url;
   const node_mac = parsedQuery.node_mac;
-  const client_ip = parsedQuery.client_ip;
   const client_mac = parsedQuery.client_mac;
   const location = AP_LOCATIONS[(node_mac || "").toLowerCase()];
   console.log('Email:', req.body.email);
