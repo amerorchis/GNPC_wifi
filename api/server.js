@@ -1,7 +1,7 @@
 // Imports
 const express = require("express");
 const app = express();
-const bodyParser = require("body-parser");
+app.set("query parser", "simple");
 const path = require("path");
 const port = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, "../public"), {
@@ -13,11 +13,22 @@ app.use(express.static(path.join(__dirname, "../public"), {
   }
 }));
 
-// Drip Client
-const client = require("drip-nodejs")({
-  token: process.env.DRIPTOKEN,
-  accountId: process.env.DRIPACCOUNT
-});
+// Drip REST API (v2)
+const DRIP_URL = (process.env.DRIP_API_URL || "https://api.getdrip.com") + "/v2/" + process.env.DRIPACCOUNT + "/";
+const DRIP_AUTH = "Basic " + Buffer.from(process.env.DRIPTOKEN).toString("base64");
+
+async function drip(resource, payload) {
+  const response = await fetch(DRIP_URL + resource, {
+    method: "POST",
+    headers: { Authorization: DRIP_AUTH, "Content-Type": "application/json" },
+    body: JSON.stringify({ [resource]: [payload] }),
+    signal: AbortSignal.timeout(5000),
+  });
+  if (!response.ok) {
+    throw new Error("Drip " + resource + " responded " + response.status + ": " + await response.text());
+  }
+  return response;
+}
 
 // Meraki AP MAC address -> park location (verified against the Meraki
 // dashboard AP list, 2026-09-08)
@@ -76,9 +87,8 @@ async function checkCooldown(client_mac) {
   return null;
 }
 
-// Express Middleware  - BodyParser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// Express Middleware - form body parsing
+app.use(express.urlencoded({ extended: false }));
 
 // GET '/' Endpoint
 app.get(["/", "/apgar", "/depot", "/stmary"], (req, res) => {
@@ -127,9 +137,7 @@ app.post(["/", "/submit", "/depot", "/stmary"], async (req, res) => {
     + "?continue_url=" + encodeURIComponent("https://glacier.org/connected/")
     + "&duration=1800";
 
-  // Get Drip Payload
-  // drip-nodejs v3 wraps these into {subscribers: [...]} / {events: [...]} itself,
-  // so pass the bare subscriber/event objects (v2 required pre-wrapped payloads)
+  // Get Drip Payload (drip() wraps these into {subscribers: [...]} / {events: [...]})
   const subscriberPayload = {
     email: req.body.email,
     tags: ["Gated Login"],
@@ -150,8 +158,8 @@ app.post(["/", "/submit", "/depot", "/stmary"], async (req, res) => {
   // Send Drip Info and Redirect. The two Drip calls run in parallel, and a
   // Drip failure must not block the guest's WiFi access - always redirect.
   const recordTasks = [
-    client.createUpdateSubscriber(subscriberPayload),
-    client.recordEvent(eventPayload)
+    drip("subscribers", subscriberPayload),
+    drip("events", eventPayload)
   ];
   if (!location && node_mac) {
     // Unmapped AP: remember its MAC so it can be identified and added to AP_LOCATIONS
@@ -164,9 +172,6 @@ app.post(["/", "/submit", "/depot", "/stmary"], async (req, res) => {
     })
     .catch(error => {
       console.error("Error in Drip operations:", error.message);
-      if (error.response) {
-        console.error("Error details:", error.response.data);
-      }
     })
     .then(() => {
       res.redirect(303, loginUrl);

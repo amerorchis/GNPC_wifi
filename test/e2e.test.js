@@ -1,4 +1,4 @@
-// End-to-end test: real server.js + drip-nodejs v3, Drip API + Upstash REST mocked locally.
+// End-to-end test: real server.js, Drip API + Upstash REST mocked locally.
 const http = require("http");
 const assert = require("assert");
 
@@ -56,7 +56,7 @@ dripMock.listen(9999, () => {
   process.env.DRIPTOKEN = "testtoken";
   process.env.DRIPACCOUNT = "1234567";
   process.env.PORT = "3123";
-  require(`${REPO}/node_modules/drip-nodejs/lib/helpers.js`).baseUrl = "http://127.0.0.1:9999/";
+  process.env.DRIP_API_URL = "http://127.0.0.1:9999";
   require(`${REPO}/api/server.js`);
   setTimeout(runTest, 400);
 });
