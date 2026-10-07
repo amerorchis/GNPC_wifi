@@ -41,6 +41,9 @@ const AP_LOCATIONS = {
   "e0:cb:bc:bf:bd:a9": "Test AP"
 };
 
+// Locations exempt from the 30-minute session limit and post-session cooldown
+const UNLIMITED_LOCATIONS = new Set(["St Mary"]);
+
 // Session cooldown: after a guest's 30-minute session ends, their device
 // (client_mac) must wait before it can sign in again. State lives in
 // Upstash Redis (Vercel Marketplace) via its REST API; every failure path
@@ -103,7 +106,7 @@ app.get("/{*splat}", (req, res) => {
 // POST Endpoint
 app.post(["/", "/submit", "/depot", "/stmary"], async (req, res) => {
   const getHost = url => {
-    return url.replace(/^((\w+:)?\/\/[^\/]+\/?).*$/, "$1");
+    return url.replace(/^((\w+:)?\/\/[^/]+\/?).*$/, "$1");
   };
 
   // Parse URL to Get Queries
@@ -115,7 +118,6 @@ app.post(["/", "/submit", "/depot", "/stmary"], async (req, res) => {
   const parsedQuery = Object.fromEntries(new URLSearchParams(query));
   const base_grant_url = parsedQuery.base_grant_url;
   const node_mac = parsedQuery.node_mac;
-  const client_ip = parsedQuery.client_ip;
   const client_mac = parsedQuery.client_mac;
   const location = AP_LOCATIONS[(node_mac || "").toLowerCase()];
   console.log('Email:', req.body.email);
@@ -125,17 +127,20 @@ app.post(["/", "/submit", "/depot", "/stmary"], async (req, res) => {
     return res.status(404).sendFile(path.join(__dirname, "../public", "404.html"));
   }
 
+  const unlimited = UNLIMITED_LOCATIONS.has(location);
+
   // Enforce the post-session cooldown for this device
-  const cooldownMinutes = await checkCooldown(client_mac);
+  const cooldownMinutes = unlimited ? null : await checkCooldown(client_mac);
   if (cooldownMinutes !== null) {
     console.log("Cooldown active for", client_mac, "-", cooldownMinutes, "min left");
     return res.status(429).send(cooldownTemplate.replace(/{{minutes}}/g, String(cooldownMinutes)));
   }
 
-  // After Meraki grants access, send the guest to the Conservancy's connected page
+  // After Meraki grants access, send the guest to the Conservancy's connected page.
+  // Unlimited locations omit duration, so the Meraki dashboard's splash frequency applies.
   const loginUrl = base_grant_url
     + "?continue_url=" + encodeURIComponent("https://glacier.org/connected/")
-    + "&duration=1800";
+    + (unlimited ? "" : "&duration=" + SESSION_SECONDS);
 
   // Get Drip Payload (drip() wraps these into {subscribers: [...]} / {events: [...]})
   const subscriberPayload = {
