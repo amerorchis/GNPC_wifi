@@ -185,6 +185,16 @@ async function runTest() {
     assert.strictEqual((await post("/", `https://splash.example.com/?base_grant_url=${GRANT}&client_mac=CC%3ADD`, "test@example.com")).status, 303);
     assert.strictEqual(kvSetCount, setsBefore9e, "uppercase MAC matches lowercase grant");
 
+    // 9f. St Mary AP: no cooldown even with a used-up session, no duration cap, no grant recorded
+    kvStore.set("grant:99:88", { value: String(now - 1900), exp: now + 1700 });
+    const setsBefore9f = kvSetCount;
+    const resStMary = await post("/", `https://splash.example.com/?base_grant_url=${GRANT}&node_mac=AC:17:C8:10:EF:0C&client_mac=99%3A88`, "stmary@example.com");
+    assert.strictEqual(resStMary.status, 303, "St Mary must bypass cooldown");
+    assert.ok(!resStMary.headers.get("location").includes("duration="), "St Mary has no session duration");
+    const resStMaryNew = await post("/", `https://splash.example.com/?base_grant_url=${GRANT}&node_mac=AC:17:C8:10:EF:0C&client_mac=77%3A66`, "stmary@example.com");
+    assert.strictEqual(resStMaryNew.status, 303);
+    assert.strictEqual(kvSetCount, setsBefore9f, "St Mary grants are not recorded");
+
     console.log("ALL TESTS PASSED");
     process.exit(0);
   } catch (err) {
