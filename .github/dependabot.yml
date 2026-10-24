@@ -8,3 +8,7 @@ updates:
       npm-dependencies:
         patterns:
           - "*"
+      security-updates:
+        applies-to: security-updates
+        patterns:
+          - "*"
